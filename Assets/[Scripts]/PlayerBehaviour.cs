@@ -7,7 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Player Properties")]
     public float speed = 2.0f;
     public Boundary boundary;
-    public float verticalPosition;
+    public float horizontalPosition;
     public float verticalSpeed = 10.0f;
     public bool usingMobileInput = false;
 
@@ -66,14 +66,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void ConventionalInput()
     {
-        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
-        transform.position += new Vector3(x, 0.0f, 0.0f);
+        float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * speed;
+        transform.position += new Vector3(0.0f, y, 0.0f);
     }
     
     public void Move()
     {
-        float clampedPosition = Mathf.Clamp(transform.position.x, boundary.min, boundary.max);
-        transform.position = new Vector2(clampedPosition, verticalPosition);
+        float clampedPosition = Mathf.Clamp(transform.position.y, boundary.min, boundary.max);
+        transform.position = new Vector2(horizontalPosition, clampedPosition);
     }
 
     void FireBullets()
