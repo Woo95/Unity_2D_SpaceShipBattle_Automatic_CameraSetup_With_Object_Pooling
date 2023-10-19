@@ -7,7 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Player Properties")]
     public float speed = 2.0f;
     public Boundary boundary;
-    public float horizontalPosition;
+    private float horizontalPosition;
     public float verticalSpeed = 10.0f;
     public bool usingMobileInput = false;
 
@@ -32,7 +32,29 @@ public class PlayerBehaviour : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
 
         InvokeRepeating("FireBullets", 0.0f, fireRate);
-    }
+
+		SetBoundaryCameraPerspective();
+		SetPlayerPositionCameraPerspective();
+	}
+
+    void SetBoundaryCameraPerspective()
+    {
+		float playerHalfSize = 0.5f;
+		Vector3 pos = camera.transform.position;
+		boundary.min = pos.y - camera.orthographicSize + playerHalfSize;
+		boundary.max = pos.y + camera.orthographicSize - playerHalfSize;
+	}
+
+    void SetPlayerPositionCameraPerspective()
+	{
+		float playerHalfSize = 0.5f;
+		Vector3 pos = camera.transform.position;
+		float startingPosX = pos.x - camera.orthographicSize * camera.aspect + playerHalfSize;   // left-hand side of the screen
+		float startingPosY = (boundary.min + boundary.max) * 0.5f;  // y = 0 camera's perspective position.
+		transform.position = new Vector3(startingPosX, startingPosY, 0);
+
+		horizontalPosition = startingPosX;
+	}
 
     // Update is called once per frame
     void Update()
