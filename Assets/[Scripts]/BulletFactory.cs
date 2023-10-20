@@ -38,8 +38,9 @@ public class BulletFactory : MonoBehaviour
         {
             case BulletType.PLAYER:
                 bullet.GetComponent<SpriteRenderer>().sprite = playerBulletSprite;
-                bullet.GetComponent<BulletBehaviour>().SetDirection(BulletDirection.UP);
-                bullet.name = "PlayerBullet";
+                bullet.GetComponent<BulletBehaviour>().SetDirection(BulletDirection.RIGHT);
+				//bullet.transform.Rotate(Vector3.forward, -90.0f);
+				bullet.name = "PlayerBullet";
                 break;
             case BulletType.ENEMY:
                 bullet.GetComponent<SpriteRenderer>().sprite = enemyBulletSprite;
