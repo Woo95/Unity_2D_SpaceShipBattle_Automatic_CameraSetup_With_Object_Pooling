@@ -33,23 +33,22 @@ public class BackgroundStarSpawner : MonoBehaviour
         float spriteSizeX = starRenderer.bounds.size.x;
 		float spriteSizeY = starRenderer.bounds.size.y;
 
+		Vector3 cameraPos = camera.transform.position;
 		float cameraHalfWidth = camera.orthographicSize * camera.aspect;
 		float cameraHalfHeight = camera.orthographicSize;
 
-		Vector3 cameraPos = camera.transform.position;
+		float startX = cameraPos.x - cameraHalfWidth - spriteSizeX;
+		float startY = cameraPos.y - cameraHalfHeight;
 
-		float startingPosX = cameraPos.x - cameraHalfWidth - spriteSizeX;
-		float initialStratingPosY = cameraPos.y - cameraHalfHeight;
+		float endX = cameraPos.x + cameraHalfWidth;
+		float endY = cameraPos.y + cameraHalfHeight;
 
-		while (startingPosX < cameraHalfWidth)
+		for (float posX = startX; posX < endX; posX += spriteSizeX)
 		{
-			float startingPosY = initialStratingPosY;
-			while (startingPosY < cameraHalfHeight)
+			for (float posY = startY; posY < endY; posY += spriteSizeY)
 			{
-				InstantiateBackgroundStar(startingPosX, startingPosY);
-				startingPosY += spriteSizeY;
+				InstantiateBackgroundStar(posX, posY);
 			}
-			startingPosX += spriteSizeX;
 		}
 	}
 
