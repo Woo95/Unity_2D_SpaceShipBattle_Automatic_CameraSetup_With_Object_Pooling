@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+source file name: BulletBehaviour.cs
+name: chaewan woo
+student number: 101354291
+date last modified: 2023/10/20
+program description: bullet behaviour
+Revision History: It's on the git repo
+*/
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 

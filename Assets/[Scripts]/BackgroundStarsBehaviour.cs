@@ -1,3 +1,11 @@
+/*
+source file name: BackgroundStarsBehaviour.cs
+name: chaewan woo
+student number: 101354291
+date last modified: 2023/10/20
+program description: background image behaviour
+Revision History: It's on the git repo
+*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
