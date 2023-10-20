@@ -6,7 +6,7 @@ public class BackgroundStarSpawner : MonoBehaviour
 {
     public GameObject starPrefab;
 
-    private Camera camera;
+    private new Camera camera;
     private float rotation = 90.0f;
 
     // Start is called before the first frame update

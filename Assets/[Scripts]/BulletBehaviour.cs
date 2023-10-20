@@ -14,13 +14,13 @@ public class BulletBehaviour: MonoBehaviour
     [Header("Bullet Properties")]
     public BulletDirection bulletDirection;
     public float speed;
-    public ScreenBounds bounds;
+    private ScreenBounds bounds;
     public BulletType bulletType;
 
     private Vector3 velocity;
     private BulletManager bulletManager;
 
-    private Camera camera;
+    private new Camera camera;
 
     void Start()
     {

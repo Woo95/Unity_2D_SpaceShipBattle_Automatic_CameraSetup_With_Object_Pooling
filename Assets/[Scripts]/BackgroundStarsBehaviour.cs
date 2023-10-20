@@ -8,7 +8,7 @@ public class BackgroundStarsBehaviour : MonoBehaviour
     private Boundary boundary;
 
     private SpriteRenderer m_spriteRenderer;
-	private Camera camera;
+	private new Camera camera;
 
 	private void Start()
 	{

@@ -16,7 +16,7 @@ public class PlayerBehaviour : MonoBehaviour
     public float fireRate = 0.2f;
     
 
-    private Camera camera;
+    private new Camera camera;
     private ScoreManager scoreManager;
     private BulletManager bulletManager;
 
