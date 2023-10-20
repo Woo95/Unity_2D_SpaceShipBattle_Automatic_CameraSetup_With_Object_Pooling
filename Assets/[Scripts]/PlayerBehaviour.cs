@@ -53,7 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void SetPlayerBoundaryCameraPerspective()
     {
-		float playerHalfSize = 0.5f;
+		float playerHalfSize = m_spriteRenderer.bounds.size.y * 0.5f;
 		Vector3 pos = camera.transform.position;
 		boundary.min = pos.y - camera.orthographicSize + playerHalfSize;
 		boundary.max = pos.y + camera.orthographicSize - playerHalfSize;
@@ -61,9 +61,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     void SetPlayerPositionCameraPerspective()
 	{
-		float playerHalfSize = 0.5f;
+		float playerSize = m_spriteRenderer.bounds.size.x;
 		Vector3 pos = camera.transform.position;
-		float startingPosX = pos.x - camera.orthographicSize * camera.aspect + playerHalfSize;   // left-hand side of the screen
+		float startingPosX = pos.x - camera.orthographicSize * camera.aspect + playerSize;   // left-hand side of the screen
 		float startingPosY = (boundary.min + boundary.max) * 0.5f;  // y = 0 camera's perspective position.
 		transform.position = new Vector3(startingPosX, startingPosY, 0);
 

@@ -14,25 +14,27 @@ public class BackgroundStarSpawner : MonoBehaviour
 {
     public GameObject starPrefab;
 
-    private new Camera camera;
+	private SpriteRenderer m_starRenderer;
+	private new Camera camera;
     private float rotation = 90.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        camera = Camera.main;
+		m_starRenderer = starPrefab.GetComponent<SpriteRenderer>();
 
-		SetBackgroundPositionCameraPerspective();
+		camera = Camera.main;
+
+		if (m_starRenderer != null)
+		{
+			SetBackgroundPositionCameraPerspective();
+		}
     }
 
     void SetBackgroundPositionCameraPerspective()
     {
-		SpriteRenderer starRenderer = starPrefab.GetComponent<SpriteRenderer>();
-		if (starRenderer == null)
-            return;
-        
-        float spriteSizeX = starRenderer.bounds.size.x;
-		float spriteSizeY = starRenderer.bounds.size.y;
+        float spriteSizeX = m_starRenderer.bounds.size.x;
+		float spriteSizeY = m_starRenderer.bounds.size.y;
 
 		Vector3 cameraPos = camera.transform.position;
 		float cameraHalfWidth = camera.orthographicSize * camera.aspect;

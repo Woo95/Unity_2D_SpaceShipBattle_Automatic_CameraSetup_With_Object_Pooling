@@ -28,24 +28,28 @@ public class BulletBehaviour: MonoBehaviour
     private Vector3 velocity;
     private BulletManager bulletManager;
 
-    private new Camera camera;
+	private SpriteRenderer m_spriteRenderer;
+	private new Camera camera;
 
     void Start()
     {
         bulletManager = FindObjectOfType<BulletManager>();
 
+		m_spriteRenderer = GetComponent<SpriteRenderer>();
+
 		camera = Camera.main;
 
-        SetBulletBoundaryCameraPerspective();
+        if (m_spriteRenderer != null)
+            SetBulletBoundaryCameraPerspective();
 	}
 
 	void SetBulletBoundaryCameraPerspective()
 	{
-		float bulletSize = 0.25f;
+        float bulletSize = m_spriteRenderer.bounds.size.x;
+
 		Vector3 pos = camera.transform.position;
 		bounds.vertical.min = pos.y - camera.orthographicSize - bulletSize;
 		bounds.vertical.max = pos.y + camera.orthographicSize + bulletSize;
-		
 		
 		bounds.horizontal.min = pos.x - camera.orthographicSize * camera.aspect - bulletSize;
 		bounds.horizontal.max = pos.x + camera.orthographicSize * camera.aspect + bulletSize;
