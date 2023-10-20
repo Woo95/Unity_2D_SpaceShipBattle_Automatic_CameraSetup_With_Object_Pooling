@@ -6,9 +6,9 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [Header("Player Properties")]
     public float speed = 2.0f;
-    public Boundary boundary;
+    private Boundary boundary;
     private float horizontalPosition;
-    public float verticalSpeed = 10.0f;
+    public float horizontalSpeed = 10.0f;
     public bool usingMobileInput = false;
 
     [Header("Bullet Properties")] 
@@ -33,11 +33,11 @@ public class PlayerBehaviour : MonoBehaviour
 
         InvokeRepeating("FireBullets", 0.0f, fireRate);
 
-		SetBoundaryCameraPerspective();
+		SetPlayerBoundaryCameraPerspective();
 		SetPlayerPositionCameraPerspective();
 	}
 
-    void SetBoundaryCameraPerspective()
+    void SetPlayerBoundaryCameraPerspective()
     {
 		float playerHalfSize = 0.5f;
 		Vector3 pos = camera.transform.position;
@@ -82,7 +82,7 @@ public class PlayerBehaviour : MonoBehaviour
         foreach (var touch in Input.touches)
         {
             var destination = camera.ScreenToWorldPoint(touch.position);
-            transform.position = Vector2.Lerp(transform.position, destination, Time.deltaTime * verticalSpeed);
+            transform.position = Vector2.Lerp(transform.position, destination, Time.deltaTime * horizontalSpeed);
         }
     }
 

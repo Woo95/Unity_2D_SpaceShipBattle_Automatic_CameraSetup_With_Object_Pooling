@@ -4,25 +4,47 @@ using UnityEngine;
 
 public class BackgroundStarsBehaviour : MonoBehaviour
 {
-    public float verticalSpeed;
-    public Boundary boundary;
-    
+    public float horizontalSpeed;
+    private Boundary boundary;
 
-    // Update is called once per frame
-    void Update()
+    private SpriteRenderer m_spriteRenderer;
+	private Camera camera;
+
+	private void Start()
+	{
+		m_spriteRenderer = GetComponent<SpriteRenderer>();
+
+		camera = Camera.main;
+
+        if (m_spriteRenderer != null)
+        {
+            SetBackgroundBoundaryCameraPerspective();
+		}
+	}
+
+	void SetBackgroundBoundaryCameraPerspective()
+	{
+		float spriteSize = m_spriteRenderer.bounds.size.x * 0.5f;
+		Vector3 pos = camera.transform.position;
+		boundary.min = pos.x - camera.orthographicSize * camera.aspect - spriteSize;
+		boundary.max = pos.x + camera.orthographicSize * camera.aspect + spriteSize;
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         Move();
         CheckBounds();
     }
 
-    public void Move()
+	public void Move()
     {
-        transform.position -= new Vector3(0.0f, verticalSpeed * Time.deltaTime);
+        transform.position -= new Vector3(horizontalSpeed * Time.deltaTime, 0.0f);
     }
 
     public void CheckBounds()
     {
-        if (transform.position.y < boundary.min)
+        if (transform.position.x < boundary.min)
         {
             ResetStars();
         }
@@ -30,6 +52,6 @@ public class BackgroundStarsBehaviour : MonoBehaviour
 
     public void ResetStars()
     {
-        transform.position = new Vector2(0.0f, boundary.max);
+        transform.position = new Vector2(boundary.max, transform.position.y);
     }
 }
