@@ -19,7 +19,6 @@ public class BackgroundStarSpawner : MonoBehaviour
     void SetBackgroundPositionCameraPerspective()
     {
 		SpriteRenderer starRenderer = starPrefab.GetComponent<SpriteRenderer>();
-		Vector3 cameraPos = camera.transform.position;
 		if (starRenderer == null)
             return;
         
@@ -28,6 +27,8 @@ public class BackgroundStarSpawner : MonoBehaviour
 
 		float cameraHalfWidth = camera.orthographicSize * camera.aspect;
 		float cameraHalfHeight = camera.orthographicSize;
+
+		Vector3 cameraPos = camera.transform.position;
 
 		float startingPosX = cameraPos.x - cameraHalfWidth - spriteSizeX;
 		float initialStratingPosY = cameraPos.y - cameraHalfHeight;
