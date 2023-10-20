@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    private Boundary horizontalRespawnBoundary;
+	private Boundary horizontalRespawnBoundary;
     private Boundary verticalBoundary;
     private Boundary horizontalBoundary;
     public float horizontalSpeed;
@@ -49,18 +49,18 @@ public class EnemyBehaviour : MonoBehaviour
 
 	void SetEnemyBoundaryCameraPerspective()
 	{
-        float enemySizeY = spriteRenderer.bounds.size.y;
+		float enemyHalfSizeY = spriteRenderer.bounds.size.y * 0.5f;
 
 		Vector3 pos = camera.transform.position;
 
-		verticalBoundary.min = pos.y - camera.orthographicSize + enemySizeY * 0.71f;    // multiplied 0.71f for more percise verticalBoundary
-		verticalBoundary.max = pos.y + camera.orthographicSize - enemySizeY * 0.71f;
+		verticalBoundary.min = pos.y - camera.orthographicSize + enemyHalfSizeY;
+		verticalBoundary.max = pos.y + camera.orthographicSize - enemyHalfSizeY;
 
-		horizontalBoundary.min = pos.x - camera.orthographicSize * camera.aspect - enemySizeY;
-		horizontalBoundary.max = pos.x + camera.orthographicSize * camera.aspect + enemySizeY;
+		horizontalBoundary.min = pos.x - camera.orthographicSize * camera.aspect - 2*enemyHalfSizeY;
+		horizontalBoundary.max = pos.x + camera.orthographicSize * camera.aspect + 2*enemyHalfSizeY;
 
-        horizontalRespawnBoundary.min = horizontalBoundary.max;
-		horizontalRespawnBoundary.max = horizontalBoundary.max + enemySizeY * 2.0f;
+        horizontalRespawnBoundary.min = horizontalBoundary.max + enemyHalfSizeY;
+		horizontalRespawnBoundary.max = horizontalBoundary.max + enemyHalfSizeY * 4.0f;
 	}
 
 	// Update is called once per frame

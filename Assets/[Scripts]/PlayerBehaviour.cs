@@ -22,17 +22,20 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Bullet Properties")] 
     public Transform bulletSpawnPoint;
     public float fireRate = 0.2f;
-    
 
-    private new Camera camera;
+	private SpriteRenderer m_spriteRenderer;
+	private new Camera camera;
+
     private ScoreManager scoreManager;
     private BulletManager bulletManager;
 
     void Start()
     {
-        bulletManager = FindObjectOfType<BulletManager>();
+		bulletManager = FindObjectOfType<BulletManager>();
 
-        camera = Camera.main;
+		m_spriteRenderer = GetComponent<SpriteRenderer>();
+
+		camera = Camera.main;
 
         usingMobileInput = Application.platform == RuntimePlatform.Android ||
                            Application.platform == RuntimePlatform.IPhonePlayer;
@@ -41,8 +44,11 @@ public class PlayerBehaviour : MonoBehaviour
 
         InvokeRepeating("FireBullets", 0.0f, fireRate);
 
-		SetPlayerBoundaryCameraPerspective();
-		SetPlayerPositionCameraPerspective();
+		if (m_spriteRenderer != null)
+		{
+			SetPlayerBoundaryCameraPerspective();
+			SetPlayerPositionCameraPerspective();
+		}
 	}
 
     void SetPlayerBoundaryCameraPerspective()

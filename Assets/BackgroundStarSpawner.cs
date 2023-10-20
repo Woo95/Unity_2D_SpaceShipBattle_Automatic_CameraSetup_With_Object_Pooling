@@ -21,6 +21,7 @@ public class BackgroundStarSpawner : MonoBehaviour
     void Start()
     {
         camera = Camera.main;
+
 		SetBackgroundPositionCameraPerspective();
     }
 
