@@ -41,11 +41,6 @@ public class BulletBehaviour: MonoBehaviour
 		
 		bounds.horizontal.min = pos.x - camera.orthographicSize * camera.aspect - bulletSize;
 		bounds.horizontal.max = pos.x + camera.orthographicSize * camera.aspect + bulletSize;
-
-		Debug.Log("Horizontal Min: " + bounds.horizontal.min);
-		Debug.Log("Horizontal Max: " + bounds.horizontal.max);
-		Debug.Log("Vertical Min: " + bounds.vertical.min);
-		Debug.Log("Vertical Max: " + bounds.vertical.max);
 	}
 
 	void Update()

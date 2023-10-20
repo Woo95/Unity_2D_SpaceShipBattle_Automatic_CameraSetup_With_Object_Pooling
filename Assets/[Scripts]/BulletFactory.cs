@@ -43,8 +43,7 @@ public class BulletFactory : MonoBehaviour
                 break;
             case BulletType.ENEMY:
                 bullet.GetComponent<SpriteRenderer>().sprite = enemyBulletSprite;
-                bullet.GetComponent<BulletBehaviour>().SetDirection(BulletDirection.DOWN);
-                bullet.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
+                bullet.GetComponent<BulletBehaviour>().SetDirection(BulletDirection.LEFT);
                 bullet.name = "EnemyBullet";
                 break;
         }

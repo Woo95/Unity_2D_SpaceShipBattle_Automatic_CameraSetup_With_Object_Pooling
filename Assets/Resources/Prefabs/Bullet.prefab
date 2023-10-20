@@ -144,12 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDirection: 0
-  speed: 6
-  bounds:
-    horizontal:
-      min: -3
-      max: 3
-    vertical:
-      min: -6
-      max: 6
+  speed: 10
   bulletType: 0

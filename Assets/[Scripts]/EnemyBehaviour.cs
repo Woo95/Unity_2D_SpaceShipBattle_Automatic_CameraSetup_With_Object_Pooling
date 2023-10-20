@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemyBehaviour : MonoBehaviour
 {
-    public Boundary horizontalBoundary;
-    public Boundary verticalBoundary;
-    public Boundary screenBounds;
+    private Boundary horizontalRespawnBoundary;
+    private Boundary verticalBoundary;
+    private Boundary horizontalBoundary;
     public float horizontalSpeed;
     public float verticalSpeed;
     public Color randomColor;
@@ -15,36 +16,64 @@ public class EnemyBehaviour : MonoBehaviour
     public Transform bulletSpawnPoint;
     public float fireRate = 0.2f;
     
-    
     private BulletManager bulletManager;
     private SpriteRenderer spriteRenderer;
+
+    private new Camera camera;
+
+    private Transform trans;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         bulletManager = FindObjectOfType<BulletManager>();
-        ResetEnemy();
-        InvokeRepeating("FireBullets", 0.3f, fireRate);
-    }
 
-    // Update is called once per frame
-    void Update()
+        camera = Camera.main;
+
+        trans = transform;
+
+        SetEnemyBoundaryCameraPerspective();
+
+		ResetEnemy();
+		InvokeRepeating("FireBullets", 0.3f, fireRate);
+	}
+
+	void SetEnemyBoundaryCameraPerspective()
+	{
+        float enemySizeY = spriteRenderer.bounds.size.y;
+
+		Vector3 pos = camera.transform.position;
+
+		verticalBoundary.min = pos.y - camera.orthographicSize + enemySizeY * 0.71f;    // multiplied 0.71f for more percise verticalBoundary
+		verticalBoundary.max = pos.y + camera.orthographicSize - enemySizeY * 0.71f;
+
+		horizontalBoundary.min = pos.x - camera.orthographicSize * camera.aspect - enemySizeY;
+		horizontalBoundary.max = pos.x + camera.orthographicSize * camera.aspect + enemySizeY;
+
+        horizontalRespawnBoundary.min = horizontalBoundary.max;
+		horizontalRespawnBoundary.max = horizontalBoundary.max + enemySizeY * 2.0f;
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         Move();
         CheckBounds();
     }
 
-    public void Move()
+	float verticalDirection = 1;
+	public void Move()
     {
-        var horizontalLength = horizontalBoundary.max - horizontalBoundary.min;
-        transform.position = new Vector3(Mathf.PingPong(Time.time * horizontalSpeed, horizontalLength) - horizontalBoundary.max,
-            transform.position.y - verticalSpeed * Time.deltaTime, transform.position.z);
-    }
+		trans.position -= new Vector3(horizontalSpeed, verticalSpeed * verticalDirection, trans.position.z) * Time.deltaTime;
+
+        if (trans.position.y < verticalBoundary.min || trans.position.y > verticalBoundary.max)
+            verticalDirection *= -1;
+	}
 
     public void CheckBounds()
     {
-        if (transform.position.y < screenBounds.min)
+        if (transform.position.x < horizontalBoundary.min) // out of the map -> reset enemy
         {
             ResetEnemy();
         }
@@ -52,11 +81,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void ResetEnemy()
     {
-        var RandomXPosition = Random.Range(horizontalBoundary.min, horizontalBoundary.max);
+        var RandomXPosition = Random.Range(horizontalRespawnBoundary.min, horizontalRespawnBoundary.max);
         var RandomYPosition = Random.Range(verticalBoundary.min, verticalBoundary.max);
-        horizontalSpeed = Random.Range(1.0f, 6.0f);
-        verticalSpeed = Random.Range(1.0f, 3.0f);
-        transform.position = new Vector3(RandomXPosition, RandomYPosition, 0.0f);
+        horizontalSpeed = Random.Range(3.0f, 9.0f);
+        verticalSpeed = Random.Range(3.0f, 6.0f);
+		trans.position = new Vector3(RandomXPosition, RandomYPosition, 0.0f);
 
         List<Color> colorList = new List<Color>() {Color.red, Color.yellow, Color.magenta, Color.cyan, Color.white, Color.white};
 
